@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PlantCare AI — Disease Detection</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green-900: #0f4d2b;
+      --green-700: #1d6a3f;
+      --green-500: #2f8a53;
+      --muted: #f6faf6;
+      --card: #ffffff;
+      --border: #e6efe6;
+      --radius: 14px;
+      --max-width: 1100px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:linear-gradient(180deg, #ffffff 0%, #fbfefb 100%); color:var(--green-900); -webkit-font-smoothing:antialiased;
+    }
+    .container{max-width:var(--max-width); margin:48px auto; padding:0 24px}
+
+    /* NAV */
+    header{display:flex; align-items:center; justify-content:space-between; padding:18px 0}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:44px; height:44px; border-radius:10px; background:var(--green-900); display:grid; place-items:center; color:white; font-weight:700}
+    .brand h1{font-size:18px; margin:0}
+    nav{display:flex; gap:28px; align-items:center}
+    nav a{color:var(--green-900); text-decoration:none; font-weight:600}
+    .cta{background:linear-gradient(180deg,var(--green-700), var(--green-500)); color:white; padding:10px 18px; border-radius:12px; box-shadow:0 6px 18px rgba(47,138,83,0.18); text-decoration:none}
+
+    /* HERO */
+    .hero{text-align:center; margin-top:18px}
+    .hero h2{font-size:56px; margin:10px 0; line-height:1; font-weight:800}
+    .hero p{font-size:18px; color:#3a6350; margin:12px 0 36px}
+
+    /* Upload box */
+    .upload-card{background:var(--card); border-radius:18px; padding:34px; border:1px solid var(--border); box-shadow:0 6px 16px rgba(17, 59, 25, 0.03)}
+    .drop-area{border-radius:12px; padding:56px 32px; border:2px dashed #dfeee0; background:linear-gradient(180deg, rgba(243,249,243,0.6), transparent);}
+    .drop-area:hover{background:rgba(242,250,242,0.9)}
+    .upload-center{display:flex; flex-direction:column; align-items:center; gap:10px}
+    .upload-center svg{width:48px; height:48px; color:var(--green-700); opacity:0.95}
+    .upload-center .muted{color:#6e9a82}
+    .note{font-size:13px; color:#718d78}
+
+    /* Cards */
+    .hints{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:38px}
+    .hint{background:var(--card); border-radius:14px; padding:18px; border:1px solid var(--border); box-shadow:0 6px 12px rgba(17,59,25,0.03)}
+    .hint h4{margin:0 0 8px; font-size:16px}
+    .hint p{margin:0; color:#5f836b; font-size:14px}
+
+    footer{margin:48px 0 120px; text-align:center; color:#8aa38f}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero h2{font-size:40px}
+      .hints{grid-template-columns:repeat(1,1fr)}
+      nav{display:none}
+    }
+    @media (max-width:560px){
+      .hero h2{font-size:28px}
+      .container{padding:0 16px}
+      .drop-area{padding:36px 16px}
+    }
+
+    /* small file preview */
+    .thumb{max-width:160px; max-height:120px; border-radius:8px; object-fit:cover; border:1px solid var(--border)}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">🌿</div>
+        <h1>PlantCare AI</h1>
+      </div>
+      <nav>
+        <a href="{{ url_for('home_page') }}">Home</a>
+        <a href="{{ url_for('ai_engine_page') }}">Detect Disease</a>
+        <a href="{{ url_for('market') }}">Products</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+      <a class="cta" href="{{ url_for('ai_engine_page') }}">Start Detection</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h2>AI Disease Detection</h2>
+        <p>Upload a photo of your plant's leaf for instant disease identification</p>
+
+        <div class="upload-card" id="upload-card">
+          <div class="drop-area" id="drop-area">
+            <form id="upload-form" action="{{ url_for('submit') }}" method="post" enctype="multipart/form-data">
+              <input type="file" id="fileElem" name="image" accept="image/png, image/jpeg" style="display:none">
+            </form>
+            <div class="upload-center" id="upload-center">
+              <!-- upload icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9l4-4 4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><rect x="3.5" y="15.5" width="17" height="4" rx="1.5" stroke="currentColor" stroke-width="1.25"/></svg>
+              <div style="font-weight:700;">Click to upload or drag and drop</div>
+              <div class="muted note">PNG, JPG or JPEG (MAX. 10MB)</div>
+              <div id="preview" style="margin-top:18px"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hints" style="max-width:var(--max-width); margin:30px auto 0">
+          <div class="hint">
+            <h4>Good Lighting</h4>
+            <p>Take photos in natural light without strong shadows to help the model see details.</p>
+          </div>
+          <div class="hint">
+            <h4>Clear Focus</h4>
+            <p>Make sure the leaf is in focus — blurry photos reduce accuracy.</p>
+          </div>
+          <div class="hint">
+            <h4>Close-up Shot</h4>
+            <p>Crop to the affected area so the model can concentrate on symptoms.</p>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> PlantCare AI — Built with care for farmers and gardeners.
+    </footer>
+  </div>
+
+  <script>
+    // small helper JS: drag/drop and preview
+    const dropArea = document.getElementById('drop-area');
+    const fileElem = document.getElementById('fileElem');
+    const preview = document.getElementById('preview');
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    ['dragenter','dragover','dragleave','drop'].forEach(evtName => {
+      dropArea.addEventListener(evtName, preventDefaults, false)
+    });
+    function preventDefaults(e){ e.preventDefault(); e.stopPropagation(); }
+
+    ['dragenter','dragover'].forEach(evtName => {
+      dropArea.addEventListener(evtName, () => dropArea.classList.add('highlight'), false)
+    });
+    ['dragleave','drop'].forEach(evtName => {
+      dropArea.addEventListener(evtName, () => dropArea.classList.remove('highlight'), false)
+    });
+
+    dropArea.addEventListener('click', ()=> fileElem.click());
+    dropArea.addEventListener('drop', handleDrop, false);
+    fileElem.addEventListener('change', e => handleFiles(e.target.files));
+
+    function handleDrop(e){
+      const dt = e.dataTransfer; const files = dt.files; handleFiles(files);
+    }
+
+    function handleFiles(files){
+      if(!files || files.length===0) return;
+      const file = files[0];
+      if(!file.type.startsWith('image/')) { alert('Please upload an image file.'); return; }
+      if(file.size > 10 * 1024 * 1024){ alert('File too large. Max 10MB.'); return; }
+      preview.innerHTML = '';
+      const img = document.createElement('img'); img.className='thumb';
+      img.alt = file.name;
+      const reader = new FileReader();
+      reader.onload = e => { img.src = e.target.result; preview.appendChild(img); }
+      reader.readAsDataURL(file);
+
+      // Auto-submit to backend for prediction
+      document.getElementById('upload-form').requestSubmit();
+    }
+  </script>
+</body>
+</html>

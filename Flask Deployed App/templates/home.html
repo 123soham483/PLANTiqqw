@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PlantCare AI — Protect Your Plants</title>
+  <meta name="description" content="Protect your plants with AI-powered disease detection. Upload a leaf photo and get instant recommendations." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green-900:#0b3a21;
+      --green-700:#0f5f33;
+      --green-500:#2f8a46;
+      --green-300:#9bd37e;
+      --muted:#66757a;
+      --card:#ffffff;
+      --glass: rgba(15,95,51,0.04);
+      --radius:14px;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:linear-gradient(180deg,#f7fbf7 0%, #eef6ed 100%);color:var(--green-900);}
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:1180px;margin:0 auto;padding:32px}
+
+    /* NAV */
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    .nav-left{display:flex;align-items:center;gap:12px}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo .icon{width:46px;height:46px;border-radius:10px;background:linear-gradient(180deg,var(--green-700),var(--green-500));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(15,95,51,0.12)}
+    .logo svg{width:22px;height:22px;fill:#fff}
+    .brand{font-weight:700;font-size:18px}
+    .nav-links{display:flex;gap:18px;align-items:center;margin-left:18px}
+    .nav-links a{font-weight:600;color:var(--green-900);opacity:0.9}
+    .cta{background:var(--green-900);color:white;padding:12px 20px;border-radius:12px;font-weight:700}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr 440px;gap:36px;align-items:center;padding:40px;background:linear-gradient(180deg, rgba(47,138,70,0.02), rgba(47,138,70,0.01));border-radius:18px}
+    .hero h1{font-size:64px;line-height:1.02;margin:0;color:var(--green-900);font-weight:800}
+    .hero p{color:var(--muted);font-size:18px;margin-top:12px;max-width:620px}
+    .hero .buttons{margin-top:22px;display:flex;gap:14px}
+    .btn{padding:14px 22px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
+    .btn.primary{background:var(--green-900);color:white}
+    .btn.ghost{background:white;color:var(--green-900);border:1px solid rgba(15,95,51,0.06)}
+    .hero .image{border-radius:18px;overflow:hidden;box-shadow:0 18px 40px rgba(15,95,51,0.08)}
+    .hero .image img{width:100%;height:100%;display:block;object-fit:cover}
+
+    /* HOW IT WORKS */
+    .section{margin-top:42px}
+    .section .title{text-align:center}
+    .section h2{margin:0;font-size:36px;color:var(--green-900)}
+    .section p.subtitle{color:var(--muted);margin-top:8px}
+
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px}
+    .card{background:var(--card);border-radius:14px;padding:28px;box-shadow:0 8px 30px rgba(2,6,23,0.04);border:1px solid rgba(15,95,51,0.03)}
+    .icon-circle{width:56px;height:56px;border-radius:50%;background:linear-gradient(180deg, rgba(47,138,70,0.08), rgba(47,138,70,0.03));display:flex;align-items:center;justify-content:center}
+    .card h3{margin:14px 0 6px 0}
+    .card p{color:var(--muted);margin:0}
+
+    /* STATS */
+    .stats{display:flex;justify-content:space-between;gap:14px;margin-top:36px}
+    .stat{flex:1;text-align:center;padding:26px;border-radius:12px;background:linear-gradient(180deg, rgba(15,95,51,0.03), rgba(15,95,51,0.01));}
+    .stat h4{margin:0;font-size:36px;color:var(--green-900)}
+    .stat p{margin:6px 0 0;color:var(--muted)}
+
+    /* CTA FULL WIDTH */
+    .cta-banner{margin-top:42px;border-radius:14px;padding:48px;text-align:center;background:linear-gradient(180deg,var(--green-700),var(--green-500));color:white}
+    .cta-banner h3{margin:0;font-size:34px}
+    .cta-banner p{opacity:0.95;margin-top:10px}
+    .cta-banner .btn{margin-top:18px;background:#c6e58a;color:var(--green-900);padding:12px 26px;border-radius:14px}
+
+    footer{margin-top:40px;padding:22px 0;text-align:center;color:var(--muted);font-size:14px}
+
+    /* responsive */
+    @media (max-width:1050px){
+      .hero{grid-template-columns:1fr 360px}
+      .hero h1{font-size:48px}
+    }
+    @media (max-width:860px){
+      .hero{grid-template-columns:1fr;gap:20px}
+      .hero h1{font-size:40px}
+      .hero .image{order:-1}
+      .steps{grid-template-columns:1fr}
+      .stats{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="nav-left">
+        <div class="logo">
+          <div class="icon" aria-hidden>
+            <!-- leaf icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2C8 6 4 9 2 14c5-2 9-6 18-12-3 2-6 6-8 10-1 2-3 3-6 0z"/></svg>
+          </div>
+          <div>
+            <div class="brand">PlantCare AI</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="{{ url_for('home_page') }}">Home</a>
+          <a href="{{ url_for('ai_engine_page') }}">Detect Disease</a>
+          <a href="{{ url_for('market') }}">Products</a>
+          <a href="{{ url_for('contact') }}">Contact</a>
+        </div>
+      </div>
+
+      <div>
+        <a class="cta" href="{{ url_for('ai_engine_page') }}">Start Detection</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <h1>Protect Your Plants with AI-Powered Detection</h1>
+        <p>Instantly identify plant diseases using advanced deep learning. Get accurate diagnoses and treatment recommendations in seconds.</p>
+        <div class="buttons">
+          <a class="btn primary" href="{{ url_for('ai_engine_page') }}">Detect Disease Now</a>
+          <a class="btn ghost" href="{{ url_for('market') }}">Browse Products</a>
+        </div>
+      </div>
+
+      <div class="image" aria-hidden>
+        <!-- sample image from Unsplash (replace with your asset) -->
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7d3d6e0a1a4a4bd0e9c9b2b8a3d4f2b3" alt="Green leaf closeup">
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="title">
+        <h2>How PlantCare AI Works</h2>
+        <p class="subtitle">Three simple steps to healthier plants</p>
+      </div>
+
+      <div class="steps">
+        <div class="card">
+          <div class="icon-circle" aria-hidden>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2v14" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11l7-7 7 7" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>1. Upload Image</h3>
+          <p>Take a clear photo of your plant's affected leaves and upload it to our AI detection system.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon-circle" aria-hidden>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6v6l4 2" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>2. AI Analysis</h3>
+          <p>Our CNN model analyzes your image against 29 disease classes and returns a diagnosis with high accuracy.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon-circle" aria-hidden>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2v20" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12h14" stroke="var(--green-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>3. Get Solutions</h3>
+          <p>Receive instant treatment recommendations and shop for the right fertilizers and supplements when needed.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><h4>29+</h4><p>Disease Classes</p></div>
+        <div class="stat"><h4>75%</h4><p>Accuracy Rate</p></div>
+        <div class="stat"><h4>1k+</h4><p>Plants Analyzed</p></div>
+        <div class="stat"><h4>1 min</h4><p>Detection Time</p></div>
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <svg width="56" height="56" viewBox="0 0 24 24" style="display:block;margin:0 auto 12px auto;opacity:0.95"><path d="M12 2C8 6 4 9 2 14c5-2 9-6 18-12-3 2-6 6-8 10-1 2-3 3-6 0z" fill="rgba(255,255,255,0.9)"/></svg>
+      <h3>Ready to Save Your Plants?</h3>
+      <p>Join thousands of farmers and gardeners using AI to protect their crops.</p>
+      <a class="btn" href="{{ url_for('ai_engine_page') }}">Start Free Detection</a>
+    </section>
+
+    <footer>
+      © <span id="year"></span> PlantCare AI — Demo site. Not a substitute for professional agricultural advice.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

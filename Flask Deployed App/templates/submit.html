@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Prediction Results - PlantIQ AI Engine</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modern-style.css') }}">
+{% endblock %}
+
+{% block body %}
+<main class="container results-section">
+    <div class="results-card">
+        <h1>Detection Result</h1>
+
+        {% if uploaded_image %}
+            <img src="/{{ uploaded_image }}" alt="Uploaded Plant Leaf" class="results-image">
+
+            <div class="results-details">
+                <h2>{{ title }}</h2>
+
+                {% if desc %}
+                    <p><strong>Description:</strong> {{ desc }}</p>
+                {% endif %}
+
+                {% if prevent %}
+                    <p><strong>Prevention:</strong> {{ prevent }}</p>
+                {% endif %}
+
+                {% if image_url %}
+                    <p><a href="{{ image_url }}" target="_blank" rel="noopener noreferrer" class="info-link">Reference image</a></p>
+                {% endif %}
+            </div>
+
+            {% if sname %}
+                <div class="suggestion-card">
+                    <h3>Suggested Supplement</h3>
+                    <p><strong>Name:</strong> {{ sname }}</p>
+                    {% if buy_link %}
+                        <a href="{{ buy_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 10px;">
+                            Buy Product <i class="fas fa-shopping-cart" style="font-size: 0.8em; margin-left: 4px;"></i> </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        {% else %}
+            <p style="text-align: center; color: #dc3545;">Could not process the image. Please try again.</p>
+        {% endif %}
+
+         <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('ai_engine_page') }}" class="btn btn-secondary">Detect Another Image</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

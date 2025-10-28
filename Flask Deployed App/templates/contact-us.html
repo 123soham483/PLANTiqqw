@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Contact Us - PlantCare AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modern-style.css') }}">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% endblock %}
+
+{% block body %}
+<main class="container contact-section">
+    <h1 class="contact-title">Contact Us</h1>
+    <p class="contact-subtitle">For Any Queries & Suggestions Contact Us. We Are Happy To Help.</p>
+
+    <div class="contact-grid">
+        <div class="contact-card">
+            <h2> PlantIQ Team</h2>
+            <p>
+                "For any inquiries, support requests, or just to say hello, please use the contact details or form below."
+            </p>
+            <h3>Social Media Handles:</h3>
+            <ul class="social-media-list">
+                <li>
+                    <i class="fas fa-envelope me-2"></i>
+                    <a href="mailto:kartikukirde@gmail.com">kartikukirde@gmail.com</a>
+                </li>
+                <li>
+                    <i class="fab fa-medium me-2"></i>
+                    <a href="#" target="_blank" rel="noopener noreferrer">Kartik (Medium)</a>
+                </li>
+                <li>
+                    <i class="fab fa-python me-2"></i>
+                    <a href="#" target="_blank" rel="noopener noreferrer">Python Projects</a>
+                </li>
+                <li>
+                    <i class="fab fa-github me-2"></i>
+                    <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="contact-card">
+            <h2>PlantIQ Team</h2>
+            <p>
+                We are an Agri-Tech startup focused on AI solutions for plant health. Our technical focus areas include cloud computing and mobile app development.
+            </p>
+            <h3>Social Media Handles:</h3>
+            <ul class="social-media-list">
+                <li>
+                    <i class="fas fa-envelope me-2"></i>
+                    <a href="mailto:krsikx@gmail.com">krsikx@gmail.com</a>
+                </li>
+                <li>
+                    <i class="fas fa-link me-2"></i>
+                    <a href="https://www.krsikx.com/" target="_blank" rel="noopener noreferrer">Website</a>
+                </li>
+                <li>
+                    <i class="fab fa-linkedin me-2"></i>
+                    <a href="https://www.linkedin.com/company/krsikx-india-llp/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="margin-top:24px">
+        <a class="btn-modern btn-outline-modern" href="{{ url_for('home_page') }}">← Back to Home</a>
+    </div>
+</main>
+{% endblock %}
